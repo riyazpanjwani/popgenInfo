@@ -65,7 +65,6 @@ library("ggplot2")
  
 ## Section 1: Load the data
 
-
 ```{r, load_data_show, eval=FALSE}
 sel <- read.table("SNPselection1.txt", head = TRUE)
 dim(sel)
@@ -94,6 +93,10 @@ of SNPs with a minor allele frequency smaller than 0.05 are not computed. A
 Manhattan plot displays log10 of the p-values. It is also possible to check the
 distribution of the p-values using a Q-Q plot. The authors suggest to use false
 discovery rate (q-value) to provide a list of outliers.
+
+> Note: *PCAdapt* expects the incoming matrix to have samples in columns and
+> loci in rows. Because our data is the opposite, we need to tell the `pcadapt()`
+> function to transpose the matrix before analysis with `transpose = TRUE`.
 
 ```{r, PCAdapt}
 
@@ -215,14 +218,6 @@ summary(mod) ## This locus is not significantly correlated to temperature
  
 ```
 
-Now that we are done with the analysis, we can remove the temporary file that
-*PCAdapt* has created:
-
-```{r cleanup}
-unlink("tmp.pcadapt")
-```
-
- 
 # Conclusions
 
 - *PCAdapt* detected 14 outliers 
